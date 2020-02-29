@@ -3,7 +3,7 @@ data_dir = "/opt/nomad"
 
 client {
   enabled = true
-  servers = ["127.0.0.1:32800"]
+  servers = ["localhost:32803"]
 }
 
 tls {
@@ -15,7 +15,6 @@ tls {
   key_file  = "/var/tls/client-key.pem"
 
   # For testing/experimentation it's unlikely your hostname is going to be valid
-  verify_server_hostname = false
-
+  verify_server_hostname = true
   verify_https_client    = true
 }

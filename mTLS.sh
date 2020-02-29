@@ -8,10 +8,10 @@ cd /var/tls
 cfssl print-defaults csr | cfssl gencert -initca - | cfssljson -bare nomad-ca
 
 echo '{}' | cfssl gencert -ca=nomad-ca.pem -ca-key=nomad-ca-key.pem -config=cfssl.json \
-    -hostname="server.${DATACENTER_NAME_ENV}.nomad,localhost,127.0.0.1" - | cfssljson -bare server
+    -hostname="server.${REGION_NAME_ENV}.nomad,localhost,127.0.0.1" - | cfssljson -bare server
 
 echo '{}' | cfssl gencert -ca=nomad-ca.pem -ca-key=nomad-ca-key.pem -config=cfssl.json \
-    -hostname="client.${DATACENTER_NAME_ENV}.nomad,localhost,127.0.0.1" - | cfssljson -bare client
+    -hostname="client.${REGION_NAME_ENV}.nomad,localhost,127.0.0.1" - | cfssljson -bare client
 
 echo '{}' | cfssl gencert -ca=nomad-ca.pem -ca-key=nomad-ca-key.pem -profile=client \
     - | cfssljson -bare cli
