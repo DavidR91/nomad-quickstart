@@ -28,14 +28,19 @@ RUN mkdir --parents /opt/nomad \
 && echo "region=\"${REGION_NAME_ENV}\"" >> /etc/nomad.d/nomad.hcl \
 && echo 'data_dir = "/opt/nomad"' >> /etc/nomad.d/nomad.hcl
 
-RUN echo -e "server {\nenabled = true\nbootstrap_expect = ${BOOTSTRAP_EXPECT_ENV}\n}" > /etc/nomad.d/server.hcl
+RUN echo -e "server {\nenabled = true\nbootstrap_expect = ${BOOTSTRAP_EXPECT_ENV}\nauthoritative_region=\"${REGION_NAME_ENV}\"}\nacl {\nenabled = true\n}" > /etc/nomad.d/server.hcl
 
-RUN mkdir --parents /var/tls
+RUN mkdir --parents /var/tls \
+&& mkdir --parents /var/acl
+
+ADD acl.sh /var/acl/acl.sh
 ADD mTLS.sh /var/tls/mTLS.sh
 ADD cfssl.json /var/tls/cfssl.json
-RUN chmod +x /var/tls/mTLS.sh
+
+RUN chmod +x /var/tls/mTLS.sh \
+&& chmod +x /var/acl/acl.sh
 
 VOLUME /opt/nomad
 VOLUME /var/tls
 
-CMD ./var/tls/mTLS.sh ; nomad agent -config /etc/nomad.d
+CMD ./var/tls/mTLS.sh ;  (sleep 3 ; ./var/acl/acl.sh) & nomad agent -config /etc/nomad.d
