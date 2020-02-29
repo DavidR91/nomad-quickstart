@@ -17,3 +17,12 @@ echo '{}' | cfssl gencert -ca=nomad-ca.pem -ca-key=nomad-ca-key.pem -profile=cli
     - | cfssljson -bare cli
 
 echo -e 'tls {\n  http = true\n  rpc  = true\n\n  ca_file   = "/var/tls/nomad-ca.pem"\n  cert_file = "/var/tls/server.pem"\n  key_file  = "/var/tls/server-key.pem"\n\n  verify_server_hostname = true\n  verify_https_client    = false\n}' >> /etc/nomad.d/nomad.hcl
+
+echo "**** CERTIFICATE AUTHORITY: ****"
+less /var/tls/nomad-ca.pem
+
+echo "**** CLIENT CERTIFICATE: ****"
+less /var/tls/client.pem
+
+echo "**** CLIENT KEY: ****"
+less /var/tls/client-key.pem
