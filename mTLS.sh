@@ -26,3 +26,9 @@ less /var/tls/client.pem
 
 echo "**** CLIENT KEY: ****"
 less /var/tls/client-key.pem
+
+echo "**** CLI CERTIFICATE: ****"
+less /var/tls/cli.pem
+
+echo "**** CLI KEY: ****"
+less /var/tls/cli-key.pem
