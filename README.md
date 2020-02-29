@@ -1,8 +1,12 @@
 # Nomad Quickstart
 
-Server container for Hashicorp Nomad preconfigured with persistent data directory and mTLS (although not production suitable)
+Server container for Hashicorp Nomad with lots of out-of-the box configuration already done:
 
-This is aimed at being a good toy / experimentation setup
+* persistent data directory 
+* mTLS (although not production suitable)
+* ACL bootstrapped
+
+This is aimed at being a good toy / experimentation setup but using the 'real' feature set
 
 ## Server
 Running the root docker container gives you a single-server Nomad setup. e.g. when run like so:
@@ -13,7 +17,8 @@ docker run -d -P nomad
 
 * 4646 and 4647 will be mapped to ephemeral ports on your localhost
 * On first start, the server **auto-generates certificates**. To get the keys view the top of  `docker logs nomad` 
-* The mTLS configuration and data are persisted to a volume
+* ACL bootstrapping is performed on first start too. To get the bootstrap key view the tail of the log briefly after startup
+* The mTLS configuration, ACL configuration and data are persisted to a volume
 
 By default the server does not `verify_https_client` - this is so you can test out the web UI more easily
 

@@ -42,5 +42,6 @@ RUN chmod +x /var/tls/mTLS.sh \
 
 VOLUME /opt/nomad
 VOLUME /var/tls
+VOLUME /var/acl
 
-CMD ./var/tls/mTLS.sh ;  (sleep 3 ; ./var/acl/acl.sh) & nomad agent -config /etc/nomad.d
+CMD ./var/tls/mTLS.sh ;  (./var/acl/acl.sh) & nomad agent -config /etc/nomad.d
